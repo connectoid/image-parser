@@ -75,8 +75,10 @@ def get_images(url):
                 img = image.find('img')['src']
                 img = img.replace('?format=webp&w=202&h=135&scale=both', '')
                 if img.find('no-image.jpg') < 0:
+                    img = img.replace('thumbs/thumbs/', '')
                     images_all.append(base_url + img)
             except:
+                # images_all.append('NO IMAGE')
                 pass
         return images_all
     else:
@@ -95,6 +97,7 @@ def main():
                     images = get_images(serie)
                     if images:
                         for image in images:
+                            download_file(image)
                             print(f'{count}. {image}')
                             count += 1
                         # return
