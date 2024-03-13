@@ -1,18 +1,7 @@
 import requests
-import os
 import os.path
 
 from bs4 import BeautifulSoup
-
-proxies = {
-#    'http': 'socks5://ZGTxtv:gnttyS@194.67.214.57:9658',
-#    'https': 'socks5://ZGTxtv:gnttyS@194.67.214.57:9658',
-   'http': 'socks5://wGJX8p:unz2MG@88.218.72.74:9060',
-   'https': 'socks5://wGJX8p:unz2MG@88.218.72.74:9060',
-}
-
-# from database.orm import create_download, get_manual_titles_from_donor
-
 
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
 base_url = 'https://www.emaselectric.com'
@@ -86,6 +75,19 @@ def get_images(url):
         return False
 
 
+def get_items(url):
+    response = requests.post(url=url, headers=headers)
+    if response.status_code == 200:
+        response.encoding = 'windows-1251'
+        soup = BeautifulSoup(response.text, 'lxml')
+        divs = soup.find_all('div', class_='th')
+        links = [div.find('a')['href'] for div in divs]
+        return links
+    else:
+        print(f'RESPONSE ERROR! RESPONSE STATUS CODE: {response.status_code}')
+        return False
+
+
 def main():
     count = 1
     products = get_products(base_product_url)
@@ -101,6 +103,16 @@ def main():
                             print(f'{count}. {image}')
                             count += 1
                         # return
+
+
+def main():
+    count = 1
+    for page in range(1, 79):
+        url = f'https://agroserver.ru/agro/Y2l0eT18cmVnaW9uPXxjb3VudHJ5PTd8bWV0a2E9fHNvcnQ9MXxhY2NlcHRfZ2U9MXx8/{page}/'
+        links = get_items(url)
+        for link in links:
+            print(f'{count}. {link}')
+            count += 1
 
 if __name__ == '__main__':
     main()
