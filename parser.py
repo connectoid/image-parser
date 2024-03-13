@@ -31,7 +31,7 @@ def get_products(url):
         products = [base_url + product['href'] for product in products]
         return products
     else:
-        print(f'RESPONSE ERROR! RESPONSE STATUS CODE: {response.status_code}')
+        print(f'========== PRODUCTS - RESPONSE ERROR! RESPONSE STATUS CODE: {response.status_code}')
         return False
     
 
@@ -45,7 +45,7 @@ def get_series(url):
         series = [base_url + div.find('a')['href'] for div in divs]
         return series
     else:
-        print(f'RESPONSE ERROR! RESPONSE STATUS CODE: {response.status_code}')
+        print(f'========== SERIES - RESPONSE ERROR! RESPONSE STATUS CODE: {response.status_code}')
         return False
     
 
@@ -58,7 +58,7 @@ def download_file(url):
                 file.write(response.content)
         return filename
     else:
-        print(f'RESPONSE ERROR! RESPONSE STATUS CODE: {response.status_code}')
+        print(f'========== FILE - RESPONSE ERROR! RESPONSE STATUS CODE: {response.status_code}')
         return False
 
 
@@ -80,7 +80,7 @@ def get_images(url):
                 pass
         return images_all
     else:
-        print(f'RESPONSE ERROR! RESPONSE STATUS CODE: {response.status_code}')
+        print(f'========== IMAGES - RESPONSE ERROR! RESPONSE STATUS CODE: {response.status_code}')
         return False
 
 
@@ -88,14 +88,16 @@ def main():
     count = 1
     products = get_products(base_product_url)
     for product in products:
-        series = get_series(product)
-        for serie in series:
-            images = get_images(serie)
-            for image in images:
-                print(f'{count}. {image}')
-                count += 1
-            # return
-
+        if products:
+            series = get_series(product)
+            if series:
+                for serie in series:
+                    images = get_images(serie)
+                    if images:
+                        for image in images:
+                            print(f'{count}. {image}')
+                            count += 1
+                        # return
 
 if __name__ == '__main__':
     main()
