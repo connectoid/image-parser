@@ -94,7 +94,7 @@ def main():
             for image in images:
                 print(f'{count}. {image}')
                 count += 1
-            return
+            # return
 
 
 if __name__ == '__main__':
