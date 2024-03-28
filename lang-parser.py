@@ -72,7 +72,7 @@ def main():
                     print(phrase)
                     themes.append(phrase)
                 count += 1
-                break
+                # break
             
         save_json(themes, file=f'{out_data_name}.json')
         pandas.read_json(f"{out_data_name}.json").to_excel(f"{out_data_name}.xlsx")
