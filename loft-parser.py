@@ -33,7 +33,10 @@ def get_loft(url):
         soup = BeautifulSoup(response.text, 'lxml')
         loft['loft_name'] = soup.find('h1', class_='h1loft').text
         loft['loft_street'] = soup.find('span', {'itemprop': 'streetAddress'}).text
-        loft['loft_email'] = soup.find('a', {'itemprop': 'email'}).text
+        try:
+            loft['loft_email'] = soup.find('a', {'itemprop': 'email'}).text
+        except:
+            loft['loft_email'] = 'NO EMAIL'
         loft['loft_phone'] = soup.find('a', {'itemprop': 'telephone'}).text
         
         return loft
