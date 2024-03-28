@@ -43,7 +43,7 @@ def get_phrases(url, lang):
         keys = ['rus', f'{lang}_1', f'{lang}_2']
         zipped = zip(phrases_1, phrases_2, phrases_3)
         phrases_dicts = [dict(zip(keys, values)) for values in zipped]
-        phrases_dicts.insert(0, theme_name)
+        # phrases_dicts.insert(0, theme_name)
         return phrases_dicts
     else:
         print(f'========== PRODUCTS - RESPONSE ERROR! RESPONSE STATUS CODE: {response.status_code}')
